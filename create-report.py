@@ -57,7 +57,7 @@ def create_report(mlflow_folder):
 
         for j, run in enumerate(runs[1:]):
             sys.stdout.flush()
-            print("Runs: " + str(j + 1) + "/" + str(n_runs))
+            print("Runs: " + str(j + 1) + "/" + str(n_runs), end='\r')
 
             row = {}
             
@@ -76,12 +76,12 @@ def create_report(mlflow_folder):
             for metric in metric_names:
                 # Reading metrics
                 f = open(metrics_folder + metric)
-                row['metric-' + metric] = f.read()
+                row['metric-' + metric] = float(f.read().split()[1]) # Fetch second value, convert it to float
 
-            df.append(row, ignore_index = True)
+            df = df.append(row, ignore_index = True)
 
         stop = time.time()
-        df.to_csv('report-' + str(i) + '.csv')
+        df.to_csv('experiment-' + str(i) + '.csv')
 
         print("Saved. Time elapsed: " + str(stop-start) + " seconds")
     return
