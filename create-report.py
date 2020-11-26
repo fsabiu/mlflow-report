@@ -43,7 +43,7 @@ def create_report(mlflow_folder):
     #    It creates a Pandas dataframe for each experiment of the specified folder
     """
     exp_n = next(os.walk(mlflow_folder))[1]
-    print("Converting " + str(len(exp_n) - 1) + " experiments")
+    print("Converting " + str(len(exp_n) - 1) + " experiment(s)")
 
     for i, exp in enumerate(exp_n[1:]):
         
@@ -81,7 +81,7 @@ def create_report(mlflow_folder):
             df = df.append(row, ignore_index = True)
 
         stop = time.time()
-        df.to_csv('experiment-' + str(i) + '.csv')
+        df.to_csv('experiment-' + str(i) + '.csv', index= False)
 
         print("Saved. Time elapsed: " + str(stop-start) + " seconds")
     return
